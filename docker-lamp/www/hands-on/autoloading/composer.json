@@ -1,0 +1,15 @@
+{
+  "name": "DENIOS/autoloading",
+  "authors": [
+    {
+      "name": "Philipp Mahlow",
+      "email": "philipp.mahlow@sensus-media.de"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "DENIOS\\Autoloading\\": "src/"
+    }
+  }
+}
