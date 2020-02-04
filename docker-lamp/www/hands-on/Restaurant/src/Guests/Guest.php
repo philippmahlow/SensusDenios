@@ -8,6 +8,11 @@ class Guest
 {
 
     /**
+     * @var int
+     */
+    protected $id;
+
+    /**
      * @var string
      */
     protected $name;
@@ -38,6 +43,11 @@ class Guest
     protected $dislikesFish;
 
     /**
+     * @var float
+     */
+    protected $money;
+
+    /**
      * Guest constructor.
      * @param string $name
      * @param bool $isVegan
@@ -45,16 +55,36 @@ class Guest
      * @param bool $glutenIntolerant
      * @param bool $dislikesPork
      * @param bool $dislikesFish
+     * @param float $money
      */
-    public function __construct(string $name, bool $isVegan, bool $isVegatarian, bool $glutenIntolerant, bool $dislikesPork, bool $dislikesFish)
-    {
+    public function __construct(
+        int $id,
+        string $name,
+        bool $isVegan,
+        bool $isVegatarian,
+        bool $glutenIntolerant,
+        bool $dislikesPork,
+        bool $dislikesFish,
+        float $money
+    ) {
+        $this->id = $id;
         $this->name = $name;
         $this->isVegan = $isVegan;
         $this->isVegatarian = $isVegatarian;
         $this->glutenIntolerant = $glutenIntolerant;
         $this->dislikesPork = $dislikesPork;
         $this->dislikesFish = $dislikesFish;
+        $this->money = $money;
     }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
 
     /**
      * @return string
@@ -150,6 +180,30 @@ class Guest
     public function setDislikesFish(bool $dislikesFish): void
     {
         $this->dislikesFish = $dislikesFish;
+    }
+
+    /**
+     * @return float
+     */
+    public function getMoney(): float
+    {
+        return $this->money;
+    }
+
+    /**
+     * @param float $money
+     */
+    public function setMoney(float $money): void
+    {
+        $this->money = $money;
+    }
+
+    /**
+     * @param float $sum
+     */
+    public function pay(float $sum)
+    {
+        $this->setMoney($this->getMoney() - $sum);
     }
 
 
