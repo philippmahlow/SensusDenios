@@ -4,6 +4,8 @@
 namespace DENIOS\Restaurant\Menues;
 
 
+use DENIOS\Restaurant\Dishes\Dish;
+
 class Menu
 {
 
@@ -63,7 +65,7 @@ class Menu
 
     /**
      * @param \DENIOS\Restaurant\Guests\Guest $guest
-     * @return array
+     * @return Dish[]
      */
     public function getSuitableDishes(\DENIOS\Restaurant\Guests\Guest $guest) : array {
         $eatable = [];
@@ -89,7 +91,7 @@ class Menu
                 continue;
             }
 
-            $eatable[$dish->getName()] = $dish->getPrice();
+            $eatable[] = $dish;
 
         }
 
