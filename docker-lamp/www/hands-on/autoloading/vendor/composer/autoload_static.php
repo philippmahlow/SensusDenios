@@ -6,18 +6,18 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit24dfbf93f863b67129acae1d67c8c0c3
 {
-    public static $prefixLengthsPsr4 = array(
-        'D' =>
-            array(
-                'DENIOS\\Autoloading\\' => 19,
-            ),
+    public static $prefixLengthsPsr4 = array (
+        'D' => 
+        array (
+            'DENIOS\\' => 7,
+        ),
     );
 
-    public static $prefixDirsPsr4 = array(
-        'DENIOS\\Autoloading\\' =>
-            array(
-                0 => __DIR__ . '/../..' . '/src',
-            ),
+    public static $prefixDirsPsr4 = array (
+        'DENIOS\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)

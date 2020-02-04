@@ -1,5 +1,6 @@
 <?php
 
+$string = "";
 
 if (true) {
     var_dump('Ausdruck ist wahr');
@@ -7,11 +8,11 @@ if (true) {
 
 if (false) {
     var_dump('Ausdruck ist wahr');
-} else {
+}else {
     var_dump('Ausdruck ist nicht wahr');
 }
 
-var_dump((true ? 'Ausdruck ist wahr' : 'Ausdruck ist nicht wahr'));
+var_dump((true ? 10 : 50));
 
 
 $color = 'red';
@@ -36,6 +37,7 @@ if ($color == 'green') {
 
 
 switch ($color) {
+    case 'red':
     case 'green':
         var_dump('Farbe ist grün');
         break;
@@ -46,6 +48,11 @@ switch ($color) {
         var_dump('Farbe ist unbekannt');
         break;
 }
+
+
+
+
+
 
 $i = 0;
 while ($i < 10) {
@@ -59,6 +66,17 @@ while ($i < 10) {
     $i++;
 }
 
+
+
+
+
+
+
+
+
+
+
+
 $i = 0;
 do {
     var_dump('do...while 1: ' . $i);
@@ -71,9 +89,37 @@ do {
     $i++;
 } while ($i < 10);
 
-for ($i = 0; $i < 10; $i++) {
-    var_dump('for: ' . $i);
+
+
+
+
+
+$test = [
+    0 => 'test1',
+    1 => 'test2',
+    2 => 'test3'
+];
+
+
+
+
+for ($i = 0; $i < count($test); $i++) {
+    var_dump('for: ' . $test[$i]);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 $colors = [
@@ -84,5 +130,9 @@ $colors = [
 ];
 
 foreach ($colors as $key => $value) {
-    var_dump('foreach: ' . $key . ': ' . $value);
+    var_dump('foreach: ' . $value);
+    $colors[$key] = 'test';
 }
+
+var_dump($colors);
+

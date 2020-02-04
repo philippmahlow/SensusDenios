@@ -6,10 +6,9 @@
       "email": "philipp.mahlow@sensus-media.de"
     }
   ],
-  "require": {},
   "autoload": {
     "psr-4": {
-      "DENIOS\\Autoloading\\": "src/"
+      "DENIOS\\": "src/"
     }
   }
 }

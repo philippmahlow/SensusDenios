@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'DENIOS\\Autoloading\\' => array($baseDir . '/src'),
+    'DENIOS\\' => array($baseDir . '/src'),
 );

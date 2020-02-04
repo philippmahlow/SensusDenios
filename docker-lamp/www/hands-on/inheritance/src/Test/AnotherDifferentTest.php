@@ -2,17 +2,12 @@
 
 namespace DENIOS\Inheritance\Test;
 
-class Test extends AbstractTest implements NameableInterface
-{
+class AnotherDifferentTest implements NameableInterface {
+
     /**
      * @var string
      */
     protected $name;
-
-    public function sayHello()
-    {
-        parent::sayHello();
-    }
 
     /**
      * @return string
@@ -32,7 +27,3 @@ class Test extends AbstractTest implements NameableInterface
 
 
 }
-
-$tes = new Test();
-
-$tes->sayHello();

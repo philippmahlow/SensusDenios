@@ -1,77 +1,32 @@
 <?php
 
-class Car
-{
-    CONST GAS_AMOUNT_PER_DRIVE = 3;
 
-    /**
-     * @var string
-     */
-    protected $color;
 
-    /**
-     * @var float
-     */
-    protected $gasAmount;
 
-    /**
-     * Car constructor.
-     * @param string $color
-     * @param float $gasAmount
-     */
-    public function __construct(string $color, float $gasAmount)
-    {
-        $this->color = $color;
-        $this->gasAmount = $gasAmount;
-    }
 
-    /**
-     * @return string
-     */
-    public function getColor(): string
-    {
-        return $this->color;
-    }
+$amount = Car::getGasAmountForDrive();
 
-    /**
-     * @param string $color
-     */
-    public function setColor(string $color): void
-    {
-        $this->color = $color;
-    }
+$car2 = new Car('Black', 10);
 
-    /**
-     * @return float
-     */
-    public function getGasAmount(): float
-    {
-        return $this->gasAmount;
-    }
+$driver = new Driver('Philipp', true);
 
-    /**
-     * @param float $gasAmount
-     */
-    public function setGasAmount(float $gasAmount): void
-    {
-        $this->gasAmount = $gasAmount;
-    }
-
-    public function drive()
-    {
-        // implement method. The gas amount should be deducted by the defined amount per drive.
-    }
-
+var_dump($car2->getGasAmount());
+$car2->drive($driver);
+/*
+try {
+    $car2->drive();
+    $car2->drive();
+    $car2->drive();
+    $car2->drive();
+} catch (\Exception $ex) {
+    var_dump($ex->getMessage());
 }
-
-$car = new Car('White', 30);
-
-var_dump($car->getGasAmount());
-
+*/
+/*
 $car->drive();
 
 var_dump($car->getGasAmount());
-
+*/
 
 
 // implement class Manufacturer and add Manufacturer to Car Class

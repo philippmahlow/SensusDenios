@@ -5,10 +5,17 @@ $boolean = true;
 $boolean = false;
 
 //string
-$string = "Lorem Ipsum";
-$string = 'Lorem Ipsum';
+$substring = 'TEST';
+
+$string = "Lorem Ipsum $substring";
+$string = 'Lorem Ipsum $substring';
 $string = <<<EOF
     LOREM IPSUM
+    
+    wlkretwrjlk
+    
+    
+    qewlrjqeltij 
 EOF;
 
 $part = 'TEST';
@@ -17,9 +24,9 @@ echo $string . ' ' . $part . '<br/>';
 
 echo "$string $part<br/>";
 
-echo "\$string \$part<br/>";
+echo "\$string \" \$part<br/>";
 
-echo '$string $part<br/>';
+echo '$string " $part<br/>';
 
 echo "Mein Name ist \"Peter\"<br/>";
 
@@ -50,6 +57,8 @@ echo intval($float) . "<br/>";
 echo floor($float) . "<br/>";
 echo ceil($float) . "<br/>";
 
+//echo round($float);
+
 //arrays
 
 $array = [
@@ -61,8 +70,8 @@ $array = [
 echo $array[1] . "<br/>";
 
 $array2 = [
-    'yellow',
-    'pink'
+    0 => 'yellow',
+    1 => 'pink'
 ];
 var_dump($array2);
 

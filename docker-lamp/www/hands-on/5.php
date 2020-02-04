@@ -37,7 +37,9 @@ function addWrong($value1, $value2): string
 //var_dump(addWrong(1,2));
 
 /**
- * @param int $value1
+ * Beschreibung Funktion
+ *
+ * @param int $value1 This is a...
  * @param int $value2
  * @return int
  */
@@ -48,6 +50,27 @@ function addCorrect(int $value1, int $value2): int
 
 var_dump(addCorrect(1, 2));
 
+
+
+
+
+function numberGeneratorOld():array
+{
+    $return = [];
+    for ($i = 1; $i <= 3; $i++) {
+        $return[] = $i;
+    }
+
+    return $return;
+}
+
+foreach (numberGeneratorOld() as $value) {
+    var_dump($value);
+}
+
+
+
+
 function numberGenerator():Generator
 {
     for ($i = 1; $i <= 3; $i++) {
@@ -56,9 +79,14 @@ function numberGenerator():Generator
     }
 }
 
+
 foreach(numberGenerator() as $value) {
     var_dump($value);
 }
+
+
+
+
 
 
 CONST ONLY_VEGETARIAN = false;
@@ -66,6 +94,10 @@ CONST ONLY_VEGAN = false;
 CONST AVOID_GLUTEN = false;
 CONST AVOID_PORK = false;
 CONST AVOID_FISH = true;
+
+
+
+
 
 $dishes = [
     [

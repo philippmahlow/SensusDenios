@@ -10,8 +10,7 @@ interface NameableInterface
     public function setName(string $name): void;
 
     /**
-     * @param string $name
      * @return string
      */
-    public function getName(string $name): string;
+    public function getName(): string;
 }
