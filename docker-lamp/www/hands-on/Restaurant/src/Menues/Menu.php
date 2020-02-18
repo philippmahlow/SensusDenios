@@ -71,32 +71,53 @@ class Menu
         $eatable = [];
 
         foreach($this->getDishes() as $dish) {
-            if($guest->isVegan() && !$dish->isVegan()){
-                continue;
-            }
 
-            if($guest->isVegatarian() && !$dish->isVegatarian()){
-                continue;
-            }
+            $ingredients = $dish->getIngredients();
 
-            if($guest->isGlutenIntolerant() && $dish->isGlutenFree()) {
-                continue;
-            }
+            //TRUE ODER FALSE
+            $isEatable = $this->checkIngredients($guest,$ingredients);
 
-            if($guest->isDislikesFish() && $dish->isHasFish()) {
-                continue;
+            var_dump($isEatable);
+            if($isEatable){
+                $eatable[] = $dish;
             }
-
-            if($guest->isDislikesPork() && $dish->isHasPork()) {
-                continue;
-            }
-
-            $eatable[] = $dish;
 
         }
-
         return $eatable;
 
+    }
+
+
+    function checkIngredients($guest,$ingredients) {
+        $isEatable = true;
+
+        foreach ($ingredients as $ingredient) {
+            if($ingredient->getAdditionalIngredients() !== null) {
+                $isEatable = $this->checkIngredients($guest, $ingredient->getAdditionalIngredients());
+            }
+
+            if($guest->isVegan() && !$ingredient->isVegan()){
+                return false;
+            }
+
+            if($guest->isVegatarian() && !$ingredient->isVegatarian()){
+                return false;
+            }
+
+            if($guest->isGlutenIntolerant() && !$ingredient->isGlutenFree()) {
+                return false;
+            }
+
+            if($guest->isDislikesFish() && !$ingredient->isHasFish()) {
+                return false;
+            }
+
+            if($guest->isDislikesPork() && !$ingredient->isHasPork()) {
+                return false;
+            }
+        }
+
+        return $isEatable;
     }
 
 

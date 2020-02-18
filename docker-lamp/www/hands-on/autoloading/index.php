@@ -8,6 +8,34 @@ use DENIOS\Vehicles\WheelieInterface;
 
 require_once 'vendor/autoload.php';
 
+$db = new mysqli('mysql', 'root', 'tiger', 'docker');
+$query = $db->query("SELECT * FROM car");
+
+while($row = $query->fetch_assoc())
+{
+    var_dump($row);
+}
+
+$param = "BMW";
+$statement = $db->prepare("
+SELECT * 
+FROM car c 
+INNER JOIN model mo 
+	ON mo.id = c.model_id 
+INNER JOIN manufacturer ma 
+	ON ma.id = mo.manufacturer_id 
+WHERE ma.name LIKE ?
+");
+$statement->bind_param('s', $param);
+$statement->execute();
+$result = $statement->get_result();
+
+var_dump($result->fetch_all());
+
+
+die;
+
+
 try {
     new Bicycle('Black', 2, 'e-bike');
 } catch (\DENIOS\Vehicles\BycicleValidationException $ex) {

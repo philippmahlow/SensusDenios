@@ -1,98 +1,125 @@
+<html>
+<head>
+
+</head>
+<body>
 <?php
-declare(strict_types=1);
+
 require __DIR__ . '/vendor/autoload.php';
 
-$db = new mysqli('mysql', 'root', 'tiger', 'docker');
-$db->set_charset('utf8');
+$db = new mysqli("mysql","root","tiger","restaurant","3306");
 
-$query = $db->query("SELECT * FROM menu");
+/*$db->set_charset('utf8');
 
-/** @var \DENIOS\Restaurant\Menues\Menu[] $menues */
-$menues = [];
+$query = $db->query("SELECT * FROM dishes");
 
-while($row = $query->fetch_assoc())
-{
-    $statement = $db->prepare("
-        SELECT d.* 
-        FROM dish d
-        INNER JOIN menu_dish md
-            ON md.dish_id = d.id AND md.menu_id = ?
-    ");
+while($item = $query->fetch_assoc()) {
+    $dishes[] = new \DENIOS\Restaurant\Dishes\Dish($item['name'],$item['price'],$item['isVegan'],$item['isVegetarian'],$item['isGlutenFree'],$item['isFishFree'],$item['isPorkFree']);
+}
+*/
 
 
-    $statement->bind_param('i', $row['id']);
+$dishes = [new \DENIOS\Restaurant\Dishes\Dish("Currywurst",5.50,
+        [
+            new DENIOS\Restaurant\Dishes\Ingredient("Wurst",false,false,true,false,true),
+            new \DENIOS\Restaurant\Dishes\Ingredient("Currysauce",true,true,false,false,false,[
+                    new \DENIOS\Restaurant\Dishes\Ingredient("Tomaten",true,true,true,false,false),
+                    new \DENIOS\Restaurant\Dishes\Ingredient("Currypulver",true,true,true,false,false)])
+        ]
+    ),
+    new DENIOS\Restaurant\Dishes\Dish("Spaghetti",3.60,
+        [
+            new DENIOS\Restaurant\Dishes\Ingredient("Nudeln",true,true,false,false,false),
+            new \DENIOS\Restaurant\Dishes\Ingredient("Tomatensauce",true,true,true,false,false,[
+                new \DENIOS\Restaurant\Dishes\Ingredient("Tomaten",true,true,true,false,false),
+                new \DENIOS\Restaurant\Dishes\Ingredient("Gewürze",true,true,true,false,false)])
+
+        ]
+    )
+];
 
 
-    $statement->execute();
-    $result = $statement->get_result();
-
-    $dishes = [];
-
-    foreach($result as $dishRow) {
-        $dishes[] = new \DENIOS\Restaurant\Dishes\Dish(
-            $dishRow['name'],
-            floatval($dishRow['price']),
-            boolval($dishRow['vegan']),
-            boolval($dishRow['vegetarian']),
-            boolval($dishRow['contains_gluten']),
-            boolval($dishRow['contains_fish']),
-            boolval($dishRow['contains_pork'])
-        );
-    }
 
 
-    $menue = new \DENIOS\Restaurant\Menues\Menu($row['name'], $dishes);
+$query = $db->query("SELECT * FROM guests");
 
-    $menues[] = $menue;
+while($guest = $query->fetch_assoc()) {
+    $guests[] = new \DENIOS\Restaurant\Guests\Guest(1,$guest['firstname']." " .$guest['lastname'],$guest['money'],$guest['isVegan'],$guest['isVegetarian'],$guest['isGlutenIntolerant'],$guest['dislikesPork'],$guest['dislikesFish']);
 }
 
-$query = $db->query("SELECT * FROM guest");
+$menue = new \DENIOS\Restaurant\Menues\Menu("EssensKarte",$dishes);
 
-$guests = [];
-while($row = $query->fetch_assoc()) {
-    $guests[] = new \DENIOS\Restaurant\Guests\Guest(
-        intval($row['id']),
-        $row['name'],
-        boolval($row['isVegan']),
-        boolval($row['isVegetarian']),
-        boolval($row['avoidGluten']),
-        boolval($row['avoidPork']),
-        boolval($row['avoidFish']),
-        floatval($row['money'])
-    );
-}
+foreach ($guests as $customer) {
+    echo "</br></br>";
+    echo $customer->getName() . " MONEY: " . $customer->getMoney();
+    echo "</br>";
 
-/** @var \DENIOS\Restaurant\Guests\Guest[] $dirtyGuests */
-$dirtyGuests = [];
+    $suitableDishes = $menue->getSuitableDishes($customer);
+    var_dump($suitableDishes);
 
-/** @var \DENIOS\Restaurant\Guests\Guest $guest */
-foreach($guests as $guest) {
-    echo 'Gast ' . $guest->getName() . '<br/>';
-    foreach($menues as $menu) {
-        echo 'Menü ' . $menu->getMenueName() . '<br/>';
-        $suitableDishes = $menue->getSuitableDishes($guest);
+    var_dump($customer);
+    if($customer->getName() == "Jannik Jakobsen")
+    {
+        echo $customer->getMoney();
 
-        shuffle($suitableDishes);
+        foreach ($suitableDishes AS $suitableDish) {
+            if($suitableDish->getName() === "Currywurst") {
+                if($customer->getMoney() <= $suitableDish->getPrice()) {
+                    $db->query("UPDATE guests SET money = 50.5 WHERE firstname = 'Jannik'" );
 
-        $dish = array_shift($suitableDishes);
+                }else {
+                    $db->query("UPDATE guests SET money =" . ($customer->getMoney() - $suitableDish->getPrice())." WHERE firstname = 'Jannik'" );
 
-        if($dish instanceof \DENIOS\Restaurant\Dishes\Dish) {
-            echo 'Gast ' . $guest->getName() . ' isst ' . $dish->getName() . '<br/>';
-            $guest->pay($dish->getPrice());
-            $dirtyGuests[] = $guest;
+                }
+            }
         }
     }
 }
 
-foreach($dirtyGuests as $guest) {
-    $statement = $db->prepare("
-        UPDATE guest SET money = ? WHERE id = ?
-    ");
+?>
 
+<div style="text-align:center;">
+    <form method="post">
+        <div>
+            <label>
+                Dish Name <input name="dishNameID" placeholder="DishName"/>
+            </label>
+        </div>
+        <div>
+            <label>
+                Price <input name="dishPriceID" placeholder="Price"/>
+            </label>
+        </div>
+        <div>
+            <label>
+                IsVegan <input name="isVegan" type="checkbox" value="1"/>
+            </label>
+        </div>
+        <div>
+            <label>
+                IsVegetarian <input name="isVegetarian" type="checkbox" value="1"/>
+            </label>
+        </div>
+        <div>
+            <label>
+                IsGlutenFree <input name="isGlutenFree" type="checkbox" value="1"/>
+            </label>
+        </div>
+        <div>
+            <label>
+                IsFishFree <input value="isFishFree" type="checkbox" value="1"/>
+            </label>
+        </div>
+        <div>
+            <label>
+                IsPorkFree <input name="isPorkFree" type="checkbox" value="1"/>
+            </label>
+        </div>
 
-    $statement->bind_param('di',
-        $guest->getMoney(),
-        $guest->getId());
+        <input type="submit" name="submitDish" value="Add Dish" />
 
-    $statement->execute();
-}
+    </form>
+</div>
+</body>
+</html>
+

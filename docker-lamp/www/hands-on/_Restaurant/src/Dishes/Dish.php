@@ -2,7 +2,7 @@
 
 namespace DENIOS\Restaurant\Dishes;
 
-class Dish
+class Dish implements IngredientsContainerInterface
 {
     /**
      * @var string
@@ -15,16 +15,17 @@ class Dish
     protected $price;
 
     /**
-     * @var array $ingredients
+     * @var Ingredient[]
      */
     protected $ingredients;
 
-
     /**
      * Dish constructor.
-     * @param array $dish
+     * @param string $name
+     * @param float $price
+     * @param array $ingredients
      */
-    public function __construct(string $name, float $price,array $ingredients)
+    public function __construct(string $name, float $price, array $ingredients)
     {
         $this->name = $name;
         $this->price = $price;
@@ -72,21 +73,11 @@ class Dish
     }
 
     /**
-     * @param array $ingredients
+     * @param Ingredient[] $ingredients
      */
     public function setIngredients(array $ingredients): void
     {
         $this->ingredients = $ingredients;
-    }
-
-    public function isVegan(){
-        foreach($this->getIngredients() as $ingredient) {
-            if(!$ingredient->isVegan()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
 

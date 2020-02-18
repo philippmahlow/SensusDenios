@@ -49,7 +49,6 @@ class Guest
 
     /**
      * Guest constructor.
-     * @param int $id
      * @param string $name
      * @param bool $isVegan
      * @param bool $isVegatarian
