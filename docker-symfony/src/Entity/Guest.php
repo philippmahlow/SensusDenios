@@ -131,5 +131,10 @@ class Guest
         $this->isAvoidFish = $isAvoidFish;
     }
 
+    public function __toString():string
+    {
+        return $this->getName();
+    }
+
 
 }

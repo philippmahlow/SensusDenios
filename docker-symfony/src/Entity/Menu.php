@@ -66,5 +66,10 @@ class Menu
         $this->dishes = $dishes;
     }
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
 
 }
