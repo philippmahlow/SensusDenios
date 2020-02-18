@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Car{% endblock %}
+
+{% block body %}
+    <h1>Car {{ car.name }} {{ test }}</h1>
+
+    <a href="{{ path('car_index') }}">back to list</a>
+
+{% endblock %}
