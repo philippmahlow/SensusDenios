@@ -3,7 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
+
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MenuRepository")
@@ -51,25 +55,25 @@ class Menu
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection|Dish[]
      */
-    public function getDishes(): ArrayCollection
+    public function getDishes(): Collection
     {
         return $this->dishes;
     }
 
     /**
-     * @param ArrayCollection $dishes
+     * @param Collection $dishes
      */
-    public function setDishes(ArrayCollection $dishes): void
+    public function setDishes(Collection $dishes): void
     {
         $this->dishes = $dishes;
     }
+
 
     public function __toString()
     {
         return $this->getName();
     }
-
 
 }

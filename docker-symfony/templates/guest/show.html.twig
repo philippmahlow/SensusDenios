@@ -38,6 +38,16 @@
         </tbody>
     </table>
 
+    <h2>Dishes</h2>
+    {% for dishList in dishes %}
+        <h3>{{ loop.index }}</h3>
+        <ul>
+            {% for dish in dishList %}
+                <li>{{ dish.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
     <a href="{{ path('guest_index') }}">back to list</a>
 
     <a href="{{ path('guest_edit', {'id': guest.id}) }}">edit</a>

@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -30,7 +29,7 @@ class Dish
 
     public function __construct()
     {
-        $this->ingredients = new ArrayCollection();
+        $this->ingredients = [];
     }
 
     public function getId(): ?int
@@ -76,9 +75,8 @@ class Dish
         return $this;
     }
 
-    public function __toString():string
+    public function __toString()
     {
         return $this->getName();
     }
-
 }

@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Guest;
+use App\Entity\Menu;
 use App\Form\GuestType;
 use App\Repository\GuestRepository;
+use App\Repository\MenuRepository;
+use App\Service\MenuFilterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,10 +54,22 @@ class GuestController extends AbstractController
     /**
      * @Route("/{id}", name="guest_show", methods={"GET"})
      */
-    public function show(Guest $guest): Response
+    public function show(Guest $guest, MenuRepository $menuRepository, MenuFilterService $menuFilterService): Response
     {
+        $dishes = [];
+
+        foreach ($menuRepository->findAll() as $menu) {
+            if(!isset($dishes[$menu->getName()])) {
+                $dishes[$menu->getName()] = [];
+            }
+            foreach($menuFilterService->filterMenu($guest, $menu) as $dish) {
+                $dishes[$menu->getName()][] = $dish;
+            }
+        }
+
         return $this->render('guest/show.html.twig', [
             'guest' => $guest,
+            'dishes' => $dishes
         ]);
     }
 
@@ -83,7 +98,7 @@ class GuestController extends AbstractController
      */
     public function delete(Request $request, Guest $guest): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$guest->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $guest->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($guest);
             $entityManager->flush();
