@@ -4,6 +4,13 @@ namespace DENIOS\Vehicles;
 
 use Exception;
 
+/**
+ * Class Vehicle
+ * @package DENIOS\Vehicles
+ * @author Philipp Mahlow <philipp.mahlow@sensus-media.de>
+ *
+ * This class represents a generic vehicle and offers generic methods.
+ */
 abstract class Vehicle
 {
 
@@ -31,6 +38,8 @@ abstract class Vehicle
 
 
     /**
+     * This function returns the total number of wheels.
+     *
      * @return int
      */
     public function getWheels(): int
@@ -57,7 +66,9 @@ abstract class Vehicle
     }
 
     /**
-     * @param string $color
+     * Sets the main color of the vehicle
+     *
+     * @param string $color This should be a nice Color
      */
     public function setColor(string $color): void
     {

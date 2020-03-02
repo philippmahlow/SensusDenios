@@ -20,19 +20,28 @@ final class MathServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->maxService = $this->getMockBuilder(\App\Service\MaxService::class)->getMock();
+        $this->maxService->expects($this->any())
+            ->method('max')
+            ->willReturnCallback(function($a, $b){
+                return max($a, $b);
+            });
+
         $this->sut = new MathService($this->maxService);
+    }
+
+    public function testSubsctractToZeroIsZero(): void
+    {
+        $this->assertEquals(
+            0,
+            $this->sut->subsctractToZero(2, 5)
+        );
     }
 
     public function testSubsctractToZero(): void
     {
-        $this->maxService->expects($this->once())
-            ->method('max')
-            ->with(0, -3)
-            ->willReturn(0.0);
-
         $this->assertEquals(
-            0,
-            $this->sut->subsctractToZero(2, 5)
+            1,
+            $this->sut->subsctractToZero(6, 5)
         );
     }
 
@@ -40,5 +49,20 @@ final class MathServiceTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->sut->substractToZeroWithException(2, 3);
+    }
+
+    public function testGetRandomNumber(): void
+    {
+        $random = $this->sut->getRandomNumber(5, 20);
+
+        $this->assertLessThanOrEqual(
+            20,
+            $random
+        );
+
+        $this->assertGreaterThanOrEqual(
+            5,
+            $random
+        );
     }
 }

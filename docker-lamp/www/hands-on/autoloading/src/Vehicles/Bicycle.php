@@ -39,6 +39,15 @@ class Bicycle extends Vehicle implements WheelieInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getWheels(): int
+    {
+        return parent::getWheels();
+    }
+
+
+    /**
      * @return string
      */
     public function getType(): string

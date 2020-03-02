@@ -2,22 +2,18 @@
 
 namespace DENIOS\Restaurant\Dishes;
 
+use DENIOS\Restaurant\Common\NameableTrait;
+
 class Dish
 {
-    /**
-     * @var string
-     */
-    protected $name;
+
+    use IngredientTrait;
+    use NameableTrait;
 
     /**
      * @var float
      */
     protected $price;
-
-    /**
-     * @var array $ingredients
-     */
-    protected $ingredients;
 
 
     /**
@@ -29,22 +25,6 @@ class Dish
         $this->name = $name;
         $this->price = $price;
         $this->ingredients = $ingredients;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
 
     /**
@@ -63,21 +43,6 @@ class Dish
         $this->price = $price;
     }
 
-    /**
-     * @return Ingredient[]
-     */
-    public function getIngredients(): array
-    {
-        return $this->ingredients;
-    }
-
-    /**
-     * @param array $ingredients
-     */
-    public function setIngredients(array $ingredients): void
-    {
-        $this->ingredients = $ingredients;
-    }
 
     public function isVegan(){
         foreach($this->getIngredients() as $ingredient) {

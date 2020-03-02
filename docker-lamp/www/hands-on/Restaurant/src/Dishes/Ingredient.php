@@ -6,15 +6,13 @@ namespace DENIOS\Restaurant\Dishes;
 
 class Ingredient
 {
+    use IngredientTrait;
+
     /**
      * @var string $name
      */
     protected $name;
 
-    /**
-     * @var array $additionalIngredients
-     */
-    protected $additionalIngredients;
 
     /**
      * @var bool
@@ -60,7 +58,7 @@ class Ingredient
         $this->isGlutenFree = $isGlutenFree;
         $this->hasFish = $hasFish;
         $this->hasPork = $hasPork;
-        $this->additionalIngredients = $additionalIngredients;
+        $this->ingredients = $additionalIngredients;
 
     }
 
@@ -85,8 +83,8 @@ class Ingredient
      */
     public function isVegan(): bool
     {
-        if($this->getAdditionalIngredients()) {
-            foreach($this->getAdditionalIngredients() as $ingredient) {
+        if($this->getIngredients()) {
+            foreach($this->getIngredients() as $ingredient) {
                 if(!$ingredient->isVegan) {
                     return false;
                 }
@@ -168,24 +166,6 @@ class Ingredient
     {
         $this->hasPork = $hasPork;
     }
-
-    /**
-     * @return Ingredient[] | null
-     */
-    public function getAdditionalIngredients()
-    {
-        return $this->additionalIngredients;
-    }
-
-    /**
-     * @param array $additionalIngredients
-     */
-    public function setAdditionalIngredients(array $additionalIngredients)
-    {
-        $this->additionalIngredients = $additionalIngredients;
-    }
-
-
 
 
 }

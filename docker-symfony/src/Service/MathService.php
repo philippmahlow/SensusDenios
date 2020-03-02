@@ -51,7 +51,7 @@ class MathService
 
     public function getRandomNumber(int $min, int $max): int
     {
-        return rand($min, $max);
+        return rand($min, $max+10);
     }
 
 
